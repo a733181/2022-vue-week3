@@ -1,24 +1,4 @@
-# 2022-vue-week3
+# 第三週：熟練 Vue.js
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- 可以新增、編輯、刪除商品
+- 商品啟用、關閉可以使用不同的顏色標示
