@@ -39,5 +39,18 @@ export default {
         throw new Error(err.message);
       }
     },
+    async delete(context, payload) {
+      try {
+        const addUrl = payload.url;
+        const url = `${apiUrl}${addUrl}`;
+        const res = await axios({
+          method: 'delete',
+          url,
+        });
+        return res;
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    },
   },
 };

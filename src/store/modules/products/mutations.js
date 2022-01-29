@@ -2,7 +2,7 @@ export default {
   getProducts(state, payload) {
     state.productData = payload;
   },
-  editOneProduct(state, payload) {
-    state.editOneProduct = payload;
+  editProduct(state, payload) {
+    state.editProduct = { ...payload };
   },
 };

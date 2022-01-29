@@ -24,12 +24,14 @@
               <button
                 type="button"
                 class="p-2 mr-2 border border-[#40916C] text-[#40916C] rounded hover:bg-[#40916C] hover:text-white active:bg-[#1B4332]"
+                @click="showProductEdit(product)"
               >
                 編輯
               </button>
               <button
                 type="button"
                 class="p-2 text-red-400 border border-red-400 rounded active:bg-red-800 hover:bg-red-600 hover:text-white active:"
+                @click="deleteProduct(product)"
               >
                 刪除
               </button>
@@ -43,17 +45,40 @@
         項產品
       </p>
     </section>
+    <base-dialog :show="productEdit" @close="closeProductEdit" productModel title="修改商品">
+      <product-form></product-form>
+    </base-dialog>
   </div>
 </template>
 
 <script>
+import ProductForm from './ProductForm.vue';
+
 export default {
   props: ['productsData'],
-  components: {},
+  emit: ['id'],
+  components: { ProductForm },
   data() {
-    return {};
+    return {
+      productEdit: false,
+    };
   },
   computed: {},
-  methods: {},
+  methods: {
+    showProductEdit(product) {
+      this.$store.dispatch('product/editProduct', product);
+      this.productEdit = true;
+    },
+    closeProductEdit() {
+      this.productEdit = false;
+    },
+    closeDialog() {
+      this.error = '';
+    },
+    deleteProduct(product) {
+      const { id } = product;
+      this.$emit('id', id);
+    },
+  },
 };
 </script>

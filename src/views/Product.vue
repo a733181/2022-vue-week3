@@ -8,13 +8,13 @@
       新增商品
     </button>
   </section>
-  <product-list :productsData="productsData" />
+  <product-list :productsData="productsData" @id="deleteProduct" />
   <base-loading :show="isLoading"></base-loading>
   <base-dialog :show="!!error" title="Error" @close="closeDialog">
     {{ error }}
   </base-dialog>
   <base-dialog :show="productAdd" @close="closeProductAdd" productModel title="新增商品">
-    <product-form></product-form>
+    <product-form productAdd></product-form>
   </base-dialog>
 </template>
 
@@ -24,7 +24,7 @@ import ProductForm from '../components/ProductForm.vue';
 
 export default {
   components: { ProductList, ProductForm },
-  emits: ['productsData'],
+  prop: ['id'],
   data() {
     return {
       error: null,
@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     productsData() {
-      return this.$store.getters['product/productsData'];
+      return this.$store.getters['product/productsData'] ?? '';
     },
   },
   methods: {
@@ -47,6 +47,7 @@ export default {
         }
       } catch (err) {
         this.$router.replace('/login');
+        this.isLoading = false;
       }
     },
     async getProducts() {
@@ -66,6 +67,18 @@ export default {
     },
     closeProductAdd() {
       this.productAdd = false;
+    },
+    async deleteProduct(id) {
+      try {
+        this.isLoading = true;
+        const res = await this.$store.dispatch('product/deleteProduct', id);
+        if (res) {
+          this.getProducts();
+        }
+      } catch (err) {
+        this.error = err.message;
+        this.isLoading = false;
+      }
     },
   },
   mounted() {

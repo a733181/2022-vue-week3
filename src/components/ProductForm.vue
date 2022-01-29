@@ -27,59 +27,69 @@
         </div>
       </div>
       <div>
+        <!-- 詳情圖-0 -->
+        <div class="mb-3">
+          <label for="imagesUrl0" class="text-xl">詳情圖-1</label>
+          <input
+            type="text"
+            id="imagesUrl0"
+            v-model="imagesUrl0.value"
+            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            :class="{ 'border-red-300': imagesUrl0.isValue }"
+            placeholder="輸入圖片網址"
+            @blue="imagesUrl0.isValue = true"
+          />
+        </div>
         <!-- 詳情圖-1 -->
         <div class="mb-3">
-          <label for="imagesUrl1" class="text-xl">詳情圖-1</label>
+          <label for="imagesUrl1" class="text-xl">詳情圖-2</label>
           <input
             type="text"
             id="imagesUrl1"
-            v-model="imagesUrl1"
+            v-model="imagesUrl1.value"
             class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            :class="{ 'border-red-300': imagesUrl1.isValue }"
             placeholder="輸入圖片網址"
+            @blue="imagesUrl1.isValue = true"
           />
         </div>
         <!-- 詳情圖-2 -->
         <div class="mb-3">
-          <label for="imagesUrl2" class="text-xl">詳情圖-2</label>
+          <label for="imagesUrl2" class="text-xl">詳情圖-3</label>
           <input
             type="text"
             id="imagesUrl2"
-            v-model="imagesUrl2"
+            v-model="imagesUrl2.value"
             class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            :class="{ 'border-red-300': imagesUrl2.isValue }"
             placeholder="輸入圖片網址"
+            @blue="imagesUrl2.isValue = true"
           />
         </div>
-        <!-- 詳情圖-3 -->
+        <!-- 詳情圖-3-->
         <div class="mb-3">
-          <label for="imagesUrl3" class="text-xl">詳情圖-3</label>
+          <label for="imagesUrl3" class="text-xl">詳情圖-4</label>
           <input
             type="text"
             id="imagesUrl3"
-            v-model="imagesUrl3"
+            v-model="imagesUrl3.value"
             class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            :class="{ 'border-red-300': imagesUrl3.isValue }"
             placeholder="輸入圖片網址"
+            @blue="imagesUrl3.isValue = true"
           />
         </div>
         <!-- 詳情圖-4 -->
         <div class="mb-3">
-          <label for="imagesUrl4" class="text-xl">詳情圖-4</label>
+          <label for="imagesUrl4" class="text-xl">詳情圖-5</label>
           <input
             type="text"
             id="imagesUrl4"
-            v-model="imagesUrl4"
-            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
-            placeholder="輸入圖片網址"
-          />
-        </div>
-        <!-- 詳情圖-5 -->
-        <div class="mb-3">
-          <label for="imagesUrl5" class="text-xl">詳情圖-5</label>
-          <input
-            type="text"
-            id="imagesUrl5"
-            v-model="imagesUrl5"
+            v-model="imagesUrl4.value"
             class="w-full px-2 py-1 mt-2 mb-3 bg-gray-200 border-2 border-gray-400 rounded-md"
+            :class="{ 'border-red-300': imagesUrl4.isValue }"
             placeholder="輸入圖片網址"
+            @blue="imagesUrl4.isValue = true"
           />
         </div>
       </div>
@@ -177,8 +187,9 @@
       <button
         type="button"
         class="text-[#40916C] rounded-lg hover:text-[#2D6A4F] active:text-[#1B4332] px-4 py-1 border border-[#40916C] hover:border-[#2D6A4F] active:border-[#1B4332] mr-2"
+        @click="clearFrom"
       >
-        清除
+        {{ productAdd ? '清除' : '還原' }}
       </button>
       <button
         class="text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] px-4 py-1"
@@ -191,8 +202,16 @@
 
 <script>
 export default {
+  props: {
+    productAdd: {
+      type: Boolean,
+      relative: false,
+      default: false,
+    },
+  },
   data() {
     return {
+      id: '',
       title: {
         value: '',
         isValue: false,
@@ -223,16 +242,33 @@ export default {
         value: '',
         isValue: false,
       },
-      imagesUrl1: '',
-      imagesUrl2: '',
-      imagesUrl3: '',
-      imagesUrl4: '',
-      imagesUrl5: '',
+      imagesUrl0: {
+        value: '',
+        isValue: false,
+      },
+      imagesUrl1: {
+        value: '',
+        isValue: false,
+      },
+      imagesUrl2: {
+        value: '',
+        isValue: false,
+      },
+      imagesUrl3: {
+        value: '',
+        isValue: false,
+      },
+      imagesUrl4: {
+        value: '',
+        isValue: false,
+      },
     };
   },
   methods: {
     submitFrom() {
-      if (this.imageUrl.value === '' || !this.imageUrl.value.includes('http')) {
+      const url = /\b(?:(?:https?|http):\/\/|www\.)[-a-z0-9+&@#%?=~_|!:,.;]*[-a-z0-9+&@#%=~_|]/i;
+
+      if (this.imageUrl.value === '' || !url.test(this.imageUrl.value)) {
         this.imageUrl.isValue = true;
         return;
       }
@@ -258,9 +294,81 @@ export default {
       }
       if (this.content.value === '') {
         this.content.isValue = true;
+        return;
+      }
+      for (let item = 0; item < 5; item += 1) {
+        const imageNumber = `imagesUrl${item}`;
+        if (this[imageNumber].value !== '') {
+          if (!url.test(this[imageNumber].value)) {
+            this[imageNumber].isValue = true;
+            return;
+          }
+        }
+      }
+
+      const imagesUrl = [];
+      for (let i = 0; i < 5; i += 1) {
+        const imageNumber = `imagesUrl${i}`;
+        imagesUrl.push(this[imageNumber]);
+      }
+
+      const data = {
+        title: this.title.value,
+        category: this.category.value,
+        origin_price: this.originPrice.value,
+        price: this.price.value,
+        unit: this.unit.value,
+        description: this.description,
+        content: this.content.value,
+        is_enabled: this.is_enabled,
+        imageUrl: this.imageUrl.value,
+        imagesUrl,
+      };
+      console.log(data);
+    },
+    clearFrom() {
+      if (this.productAdd) {
+        this.title.value = '';
+        this.description = '';
+        this.originPrice.value = '';
+        this.price.value = '';
+        this.category.value = '';
+        this.unit.value = '';
+        this.content.value = '';
+        this.enabled = 0;
+        this.imageUrl = '';
+
+        for (let i = 0; i < 5; i += 1) {
+          const imageNumber = `imagesUrl${i}`;
+          this[imageNumber] = '';
+        }
+      } else {
+        this.getEditProductData();
       }
     },
+    getEditProductData() {
+      const product = this.$store.getters['product/editProduct'];
+      this.id = product.id;
+      this.title.value = product.title;
+      this.description = product.description ?? '';
+      this.originPrice.value = product.origin_price;
+      this.price.value = product.price;
+      this.category.value = product.category;
+      this.content.value = product.content;
+      this.imageUrl.value = product.imagesUrl;
+      this.enabled = product.is_enabled;
+      this.unit.value = product.unit;
+      product.imagesUrl.forEach((item, index) => {
+        const imageNumber = `imagesUrl${index}`;
+        this[imageNumber].value = item ?? '';
+      });
+    },
   },
-  mounted() {},
+  mounted() {
+    const product = this.$store.getters['product/editProduct'];
+    if (product && !this.productAdd) {
+      this.getEditProductData();
+    }
+  },
 };
 </script>

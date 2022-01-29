@@ -9,8 +9,18 @@ export default {
     // console.log(res.data.products);
     context.commit('getProducts', res.data.products);
   },
-  editOneProduct(context, payload) {
-    console.log(payload);
-    context.commit('oneProduct', payload);
+  editProduct(context, payload) {
+    context.commit('editProduct', payload);
+  },
+  async deleteProduct(context, payload) {
+    const id = payload;
+    const url = {
+      url: `api/tita/admin/product/${id}`,
+    };
+
+    const res = await context.dispatch('axios/delete', url, {
+      root: true,
+    });
+    return res.data.success;
   },
 };
