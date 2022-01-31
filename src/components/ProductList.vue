@@ -24,7 +24,7 @@
               <button
                 type="button"
                 class="p-2 mr-2 border border-[#40916C] text-[#40916C] rounded hover:bg-[#40916C] hover:text-white active:bg-[#1B4332]"
-                @click="showProductEdit(product)"
+                @click="showEditProduct(product)"
               >
                 編輯
               </button>
@@ -45,8 +45,8 @@
         項產品
       </p>
     </section>
-    <base-dialog :show="productEdit" @close="closeProductEdit" productModel title="修改商品">
-      <product-form></product-form>
+    <base-dialog :show="switchEditProduct" @close="closeEditProduct" productModel title="修改商品">
+      <product-form @productFromData="editProduct"></product-form>
     </base-dialog>
   </div>
 </template>
@@ -60,17 +60,17 @@ export default {
   components: { ProductForm },
   data() {
     return {
-      productEdit: false,
+      switchEditProduct: false,
     };
   },
   computed: {},
   methods: {
-    showProductEdit(product) {
-      this.$store.dispatch('product/editProduct', product);
-      this.productEdit = true;
+    showEditProduct(product) {
+      this.$store.dispatch('product/editProductData', product);
+      this.switchEditProduct = true;
     },
-    closeProductEdit() {
-      this.productEdit = false;
+    closeEditProduct() {
+      this.switchEditProduct = false;
     },
     closeDialog() {
       this.error = '';
@@ -78,6 +78,9 @@ export default {
     deleteProduct(product) {
       const { id } = product;
       this.$emit('id', id);
+    },
+    editProduct(data) {
+      console.log(data);
     },
   },
 };

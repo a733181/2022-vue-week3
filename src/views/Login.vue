@@ -64,13 +64,13 @@ export default {
 
       try {
         this.isLoading = true;
-        await this.$store.dispatch('auth/login', {
-          url: 'admin/signin',
+        const auth = {
           data: {
             username: this.email.value,
             password: this.password.value,
           },
-        });
+        };
+        await this.$store.dispatch('auth/login', auth);
         this.$router.replace('/product');
       } catch (err) {
         this.error = err.message;

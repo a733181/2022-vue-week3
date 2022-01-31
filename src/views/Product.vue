@@ -9,7 +9,7 @@
     </button>
     <button
       type="button"
-      @click="showProductAdd"
+      @click="showAddProduct"
       class="py-2 text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] px-2"
     >
       新增商品
@@ -20,8 +20,8 @@
   <base-dialog :show="!!error" title="Error" @close="closeDialog">
     {{ error }}
   </base-dialog>
-  <base-dialog :show="productAdd" @close="closeProductAdd" productModel title="新增商品">
-    <product-form productAdd></product-form>
+  <base-dialog :show="switchAddProduct" @close="closeAddProduct" productModel title="新增商品">
+    <product-form addProductModel @productFromData="addProduct"></product-form>
   </base-dialog>
 </template>
 
@@ -36,7 +36,7 @@ export default {
     return {
       error: null,
       isLoading: false,
-      productAdd: false,
+      switchAddProduct: false,
     };
   },
   computed: {
@@ -69,11 +69,24 @@ export default {
     closeDialog() {
       this.error = null;
     },
-    showProductAdd() {
-      this.productAdd = true;
+    showAddProduct() {
+      this.switchAddProduct = true;
     },
-    closeProductAdd() {
+    closeAddProduct() {
+      this.switchAddProduct = false;
+    },
+    async addProduct(productData) {
       this.productAdd = false;
+      try {
+        this.isLoading = true;
+        const res = await this.$store.dispatch('product/addProduct', productData);
+        if (res) {
+          this.getProducts();
+        }
+      } catch (err) {
+        this.isLoading = false;
+        this.err = err.message;
+      }
     },
     async deleteProduct(id) {
       try {
@@ -83,8 +96,8 @@ export default {
           this.getProducts();
         }
       } catch (err) {
-        this.error = err.message;
         this.isLoading = false;
+        this.error = err.message;
       }
     },
     async logout() {

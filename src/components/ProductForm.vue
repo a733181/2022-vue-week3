@@ -15,12 +15,12 @@
             placeholder="輸入圖片網址"
           />
           <!-- 主圖預覽 -->
-          <div class="w-full h-[200px] border-2 border-gray-600 mb-2">
+          <div class="w-full h-full mb-2 border-2 border-gray-600">
             <p class="p-1">主圖預覽</p>
             <img
               :src="imageUrl.value"
               alt="主圖預覽"
-              class="w-full h-[165px] object-cover"
+              class="object-cover w-full"
               v-if="!!imageUrl.value"
             />
           </div>
@@ -188,8 +188,9 @@
         type="button"
         class="text-[#40916C] rounded-lg hover:text-[#2D6A4F] active:text-[#1B4332] px-4 py-1 border border-[#40916C] hover:border-[#2D6A4F] active:border-[#1B4332] mr-2"
         @click="clearFrom"
+        v-if="addProductModel"
       >
-        {{ productAdd ? '清除' : '還原' }}
+        清除
       </button>
       <button
         class="text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] px-4 py-1"
@@ -203,12 +204,13 @@
 <script>
 export default {
   props: {
-    productAdd: {
+    addProductModel: {
       type: Boolean,
       relative: false,
       default: false,
     },
   },
+  emits: ['productFromData'],
   data() {
     return {
       id: '',
@@ -309,25 +311,28 @@ export default {
       const imagesUrl = [];
       for (let i = 0; i < 5; i += 1) {
         const imageNumber = `imagesUrl${i}`;
-        imagesUrl.push(this[imageNumber]);
+        imagesUrl.push(this[imageNumber].value);
       }
 
       const data = {
-        title: this.title.value,
-        category: this.category.value,
-        origin_price: this.originPrice.value,
-        price: this.price.value,
-        unit: this.unit.value,
-        description: this.description,
-        content: this.content.value,
-        is_enabled: this.is_enabled,
-        imageUrl: this.imageUrl.value,
-        imagesUrl,
+        data: {
+          title: this.title.value,
+          category: this.category.value,
+          origin_price: this.originPrice.value,
+          price: this.price.value,
+          unit: this.unit.value,
+          description: this.description,
+          content: this.content.value,
+          is_enabled: this.enabled,
+          imageUrl: this.imageUrl.value,
+          imagesUrl,
+        },
       };
-      console.log(data);
+      this.$emit('productFromData', data);
+      this.clearFrom();
     },
     clearFrom() {
-      if (this.productAdd) {
+      if (this.addProductModel) {
         this.title.value = '';
         this.description = '';
         this.originPrice.value = '';
@@ -336,7 +341,7 @@ export default {
         this.unit.value = '';
         this.content.value = '';
         this.enabled = 0;
-        this.imageUrl = '';
+        this.imageUrl.value = '';
 
         for (let i = 0; i < 5; i += 1) {
           const imageNumber = `imagesUrl${i}`;
@@ -355,7 +360,7 @@ export default {
       this.price.value = product.price;
       this.category.value = product.category;
       this.content.value = product.content;
-      this.imageUrl.value = product.imagesUrl;
+      this.imageUrl.value = product.imageUrl;
       this.enabled = product.is_enabled;
       this.unit.value = product.unit;
       product.imagesUrl.forEach((item, index) => {
@@ -366,7 +371,7 @@ export default {
   },
   mounted() {
     const product = this.$store.getters['product/editProduct'];
-    if (product && !this.productAdd) {
+    if (product && !this.addProductModel) {
       this.getEditProductData();
     }
   },

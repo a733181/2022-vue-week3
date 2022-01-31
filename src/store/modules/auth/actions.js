@@ -1,7 +1,11 @@
 export default {
   async login(context, payload) {
     try {
-      const res = await context.dispatch('axios/post', payload, {
+      const data = {
+        url: 'admin/signin',
+        ...payload,
+      };
+      const res = await context.dispatch('axios/post', data, {
         root: true,
       });
       // console.log(res);
@@ -15,11 +19,8 @@ export default {
     }
   },
   async tryLogin(context) {
-    const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
-
     const payload = {
       url: 'api/user/check',
-      token,
     };
 
     try {
@@ -36,11 +37,8 @@ export default {
   },
   async logout(context) {
     try {
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
-
       const payload = {
         url: 'logout',
-        token,
       };
 
       await context.dispatch('axios/post', payload, {

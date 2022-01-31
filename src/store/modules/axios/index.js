@@ -9,17 +9,11 @@ export default {
       try {
         const addUrl = payload.url;
         const { data } = payload;
-
-        const { token } = payload;
+        const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
         axios.defaults.headers.common.Authorization = token;
-
         const url = `${apiUrl}${addUrl}`;
 
-        const res = await axios({
-          method: 'post',
-          url,
-          data,
-        });
+        const res = await axios.post(url, data);
         return res;
       } catch (err) {
         throw new Error(err.message);
@@ -30,10 +24,7 @@ export default {
         const addUrl = payload.url;
         const url = `${apiUrl}${addUrl}`;
 
-        const res = await axios({
-          method: 'get',
-          url,
-        });
+        const res = await axios.get(url);
         return res;
       } catch (err) {
         throw new Error(err.message);
@@ -43,10 +34,19 @@ export default {
       try {
         const addUrl = payload.url;
         const url = `${apiUrl}${addUrl}`;
-        const res = await axios({
-          method: 'delete',
-          url,
-        });
+        const res = await axios.delete(url);
+        return res;
+      } catch (err) {
+        throw new Error(err.message);
+      }
+    },
+    async put(context, payload) {
+      try {
+        const addUrl = payload.url;
+        const url = `${apiUrl}${addUrl}`;
+        const { data } = payload;
+
+        const res = await axios.put(url, data);
         return res;
       } catch (err) {
         throw new Error(err.message);

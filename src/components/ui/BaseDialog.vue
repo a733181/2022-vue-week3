@@ -12,7 +12,7 @@
         v-if="show"
         :class="productModel ? ['top-6'] : ['top-1/2']"
       >
-        <header v-if="title" class="flex justify-between items-center bg-[#40916C] p-3">
+        <header class="flex justify-between items-center bg-[#40916C] p-3">
           <h2 class="text-2xl text-white">{{ title }}</h2>
           <img
             src="@/assets/times-solid.svg"
