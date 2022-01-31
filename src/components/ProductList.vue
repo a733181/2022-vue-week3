@@ -30,7 +30,7 @@
               </button>
               <button
                 type="button"
-                class="p-2 text-red-400 border border-red-400 rounded active:bg-red-800 hover:bg-red-600 hover:text-white active:"
+                class="p-2 text-red-400 border border-red-400 rounded active:bg-red-800 hover:bg-red-600 hover:text-white"
                 @click="deleteProduct(product)"
               >
                 刪除

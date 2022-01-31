@@ -34,7 +34,22 @@ export default {
       throw new Error(err.message);
     }
   },
-  logout() {
-    document.cookie = `token=;expires=${new Date().toGMTString()}`;
+  async logout(context) {
+    try {
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, '$1');
+
+      const payload = {
+        url: 'logout',
+        token,
+      };
+
+      await context.dispatch('axios/post', payload, {
+        root: true,
+      });
+
+      document.cookie = `token=;expires=${new Date().toGMTString()}`;
+    } catch (err) {
+      throw new Error(err.message);
+    }
   },
 };
