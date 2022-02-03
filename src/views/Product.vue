@@ -1,10 +1,10 @@
 <template>
-  <div class="container p-3 mx-auto my-5">
-    <section class="w-full mb-8 lg:flex lg:justify-between">
+  <div class="container mx-auto my-5">
+    <section class="w-full mb-6 lg:flex lg:justify-between">
       <button
         type="button"
         @click="logout"
-        class="px-4 py-2 mr-4 text-red-400 border border-red-400 rounded-lg active:bg-red-800 hover:bg-red-600 hover:text-white"
+        class="px-4 py-2 text-red-400 border border-red-400 rounded-lg active:bg-red-800 hover:bg-red-600 hover:text-white"
       >
         登出
       </button>
@@ -16,11 +16,7 @@
         新增商品
       </button>
     </section>
-    <product-list
-      :productsData="productsData"
-      @productId="deleteProduct"
-      @editProductData="editProduct"
-    />
+    <product-list @productId="deleteProduct" @editProductData="editProduct" />
     <base-loading :show="isLoading"></base-loading>
     <base-dialog :show="!!error" title="Error" @close="closeDialog">
       {{ error }}
@@ -32,8 +28,8 @@
 </template>
 
 <script>
-import ProductList from '../components/ProductList.vue';
-import ProductForm from '../components/ProductForm.vue';
+import ProductList from '../components/product/ProductList.vue';
+import ProductForm from '../components/product/ProductForm.vue';
 
 export default {
   components: { ProductList, ProductForm },
@@ -44,11 +40,7 @@ export default {
       switchAddProduct: false,
     };
   },
-  computed: {
-    productsData() {
-      return this.$store.getters['product/productsData'] ?? '';
-    },
-  },
+  computed: {},
   methods: {
     async tryLogin() {
       try {

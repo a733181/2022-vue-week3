@@ -7,7 +7,7 @@
     ></div>
     <transition name="dialog">
       <div
-        class="absolute z-20 p-0 overflow-hidden -translate-x-1/2 bg-white rounded-lg shadow-lg left-1/2"
+        class="fixed z-20 p-0 overflow-hidden -translate-x-1/2 bg-white rounded-lg shadow-lg left-1/2"
         open
         v-if="show"
         :class="productModel ? ['top-6'] : ['top-1/2']"

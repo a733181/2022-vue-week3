@@ -27,5 +27,3 @@ git commit -m 'deploy'
 git push -f https://github.com/a733181/2022-vue-week3.git master:gh-pages
 
 cd -
-# 執行
-# sh deploy.sh
