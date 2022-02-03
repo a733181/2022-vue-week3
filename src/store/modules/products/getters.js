@@ -2,7 +2,7 @@ export default {
   productsData(state) {
     return state.productData;
   },
-  editProduct(state) {
-    return state.editProduct;
+  getEditProductData(state) {
+    return state.editProductData;
   },
 };

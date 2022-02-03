@@ -193,7 +193,7 @@
         清除
       </button>
       <button
-        class="text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] px-4 py-1"
+        class="text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] px-8 py-1"
       >
         送出
       </button>
@@ -210,7 +210,7 @@ export default {
       default: false,
     },
   },
-  emits: ['productFromData'],
+  emits: ['productFromData', 'showEditProductData'],
   data() {
     return {
       id: '',
@@ -323,9 +323,10 @@ export default {
           unit: this.unit.value,
           description: this.description,
           content: this.content.value,
-          is_enabled: this.enabled,
+          is_enabled: this.enabled ? this.enabled : 0,
           imageUrl: this.imageUrl.value,
           imagesUrl,
+          id: this.id,
         },
       };
       this.$emit('productFromData', data);
@@ -352,7 +353,7 @@ export default {
       }
     },
     getEditProductData() {
-      const product = this.$store.getters['product/editProduct'];
+      const product = this.$store.getters['product/getEditProductData'];
       this.id = product.id;
       this.title.value = product.title;
       this.description = product.description ?? '';
@@ -370,7 +371,7 @@ export default {
     },
   },
   mounted() {
-    const product = this.$store.getters['product/editProduct'];
+    const product = this.$store.getters['product/getEditProductData'];
     if (product && !this.addProductModel) {
       this.getEditProductData();
     }

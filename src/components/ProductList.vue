@@ -1,23 +1,27 @@
 <template>
-  <div class="container mx-auto">
+  <div>
     <section>
       <h2 class="mb-3 text-2xl font-extrabold">產品列表</h2>
-      <table class="table-auto">
+      <table class="w-full lg:text-center">
         <thead>
           <tr class="border-b-2 border-black">
-            <th class="p-4">產品名稱</th>
-            <th class="p-4">原價</th>
-            <th class="p-4">售價</th>
-            <th class="p-4">是否啟用</th>
-            <th class="p-4">編輯/刪除</th>
+            <th class="p-2">產品名稱</th>
+            <th class="p-2">主圖</th>
+            <th class="p-2">分類</th>
+            <th class="p-2">原價</th>
+            <th class="p-2">售價</th>
+            <th class="p-2">是否啟用</th>
+            <th class="p-2">編輯/刪除</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in productsData" :key="product.id">
-            <td class="p-4">{{ product.title }}</td>
-            <td class="p-4">{{ product.origin_price }}</td>
-            <td class="p-4">{{ product.price }}</td>
-            <td class="p-4" :class="{ 'text-red-500': product.is_enabled === 0 }">
+          <tr v-for="product in productsData" :key="product.id" class="border-b-2">
+            <td class="p-2">{{ product.title }}</td>
+            <td class="p-2 w-[200px]"><img :src="product.imageUrl" alt="" /></td>
+            <td class="p-2">{{ product.category }}</td>
+            <td class="p-2">{{ product.origin_price }}</td>
+            <td class="p-2">{{ product.price }}</td>
+            <td class="p-2" :class="{ 'text-red-500': product.is_enabled === 0 }">
               {{ product.is_enabled === 0 ? '未啟用' : '啟用' }}
             </td>
             <td>
@@ -39,7 +43,7 @@
           </tr>
         </tbody>
       </table>
-      <p>
+      <p class="mt-2">
         目前有
         <span> {{ Object.entries(productsData).length }} </span>
         項產品
@@ -56,7 +60,7 @@ import ProductForm from './ProductForm.vue';
 
 export default {
   props: ['productsData'],
-  emit: ['id'],
+  emit: ['productId', 'editProductData'],
   components: { ProductForm },
   data() {
     return {
@@ -66,21 +70,19 @@ export default {
   computed: {},
   methods: {
     showEditProduct(product) {
-      this.$store.dispatch('product/editProductData', product);
+      this.$store.dispatch('product/getEditProductData', product);
       this.switchEditProduct = true;
     },
     closeEditProduct() {
       this.switchEditProduct = false;
     },
-    closeDialog() {
-      this.error = '';
-    },
     deleteProduct(product) {
       const { id } = product;
-      this.$emit('id', id);
+      this.$emit('productId', id);
     },
-    editProduct(data) {
-      console.log(data);
+    editProduct(product) {
+      this.switchEditProduct = false;
+      this.$emit('editProductData', product);
     },
   },
 };

@@ -9,8 +9,8 @@ export default {
     // console.log(res.data.products);
     context.commit('getProducts', res.data.products);
   },
-  editProductData(context, payload) {
-    context.commit('editProductData', payload);
+  getEditProductData(context, payload) {
+    context.commit('getEditProductData', payload);
   },
   async deleteProduct(context, payload) {
     const id = payload;
@@ -19,6 +19,19 @@ export default {
     };
 
     const res = await context.dispatch('axios/delete', url, {
+      root: true,
+    });
+    return res.data.success;
+  },
+  async editProduct(context, payload) {
+    const data = {
+      url: `api/tita/admin/product/${payload.data.id}`,
+      data: {
+        ...payload,
+      },
+    };
+
+    const res = await context.dispatch('axios/put', data, {
       root: true,
     });
     return res.data.success;

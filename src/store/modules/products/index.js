@@ -7,7 +7,7 @@ export default {
   state() {
     return {
       productData: '',
-      editProduct: '',
+      editProductData: '',
     };
   },
   getters,
