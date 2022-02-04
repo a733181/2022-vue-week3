@@ -9,7 +9,7 @@
             type="text"
             id="imageUrl"
             v-model="imageUrl.value"
-            class="w-full px-2 py-1 mt-2 mb-3 bg-gray-200 border-2 border-gray-400 rounded-md"
+            class="mb-3 input"
             :class="{ 'border-red-300': imageUrl.isValue }"
             @blur="imageUrl.isValue = false"
             placeholder="輸入圖片網址"
@@ -34,7 +34,7 @@
             type="text"
             id="imagesUrl0"
             v-model="imagesUrl0.value"
-            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            class="input"
             :class="{ 'border-red-300': imagesUrl0.isValue }"
             placeholder="輸入圖片網址"
             @blue="imagesUrl0.isValue = true"
@@ -47,7 +47,7 @@
             type="text"
             id="imagesUrl1"
             v-model="imagesUrl1.value"
-            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            class="input"
             :class="{ 'border-red-300': imagesUrl1.isValue }"
             placeholder="輸入圖片網址"
             @blue="imagesUrl1.isValue = true"
@@ -60,7 +60,7 @@
             type="text"
             id="imagesUrl2"
             v-model="imagesUrl2.value"
-            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            class="input"
             :class="{ 'border-red-300': imagesUrl2.isValue }"
             placeholder="輸入圖片網址"
             @blue="imagesUrl2.isValue = true"
@@ -73,7 +73,7 @@
             type="text"
             id="imagesUrl3"
             v-model="imagesUrl3.value"
-            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            class="input"
             :class="{ 'border-red-300': imagesUrl3.isValue }"
             placeholder="輸入圖片網址"
             @blue="imagesUrl3.isValue = true"
@@ -101,7 +101,7 @@
             type="text"
             id="title"
             v-model="title.value"
-            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+            class="input"
             :class="{ 'border-red-300': title.isValue }"
             @blur="title.isValue = false"
           />
@@ -109,12 +109,7 @@
         <!-- 描述/副標 -->
         <div class="mb-3">
           <label for="description" class="text-xl">描述 / 副標題</label>
-          <input
-            type="text"
-            id="description"
-            v-model="description"
-            class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
-          />
+          <input type="text" id="description" v-model="description" class="input" />
         </div>
         <!-- 原價/售價 -->
         <div class="flex gap-2">
@@ -124,7 +119,7 @@
               type="number"
               id="originPrice"
               v-model="originPrice.value"
-              class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+              class="input"
               :class="{ 'border-red-300': originPrice.isValue }"
               @blur="originPrice.isValue = false"
             />
@@ -135,7 +130,7 @@
               type="number"
               id="price"
               v-model="price.value"
-              class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+              class="input"
               :class="{ 'border-red-300': price.isValue }"
               @blur="price.isValue = false"
             />
@@ -160,25 +155,25 @@
               type="text"
               id="unit"
               v-model="unit.value"
-              class="w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md"
+              class="input"
               :class="{ 'border-red-300': unit.isValue }"
             />
           </div>
         </div>
-        <!-- 內容說明/啟用 -->
+        <!-- 內容說明/上架 -->
         <div class="mb-1">
           <label for="content" class="text-xl"><span class="text-red-500">*</span>內容說明</label>
           <textarea
             type="text"
             id="content"
             v-model="content.value"
-            class="bg-gray-200 border-2 border-gray-400 rounded-md w-full mt-2 px-2 py-1 h-[140px]"
+            class="input h-[140px]"
             :class="{ 'border-red-300': content.isValue }"
             @blue="content.isValue = false"
           />
         </div>
         <div class="">
-          <label for="enabled" class="mr-1 text-xl">啟用</label>
+          <label for="enabled" class="mr-1 text-xl">上架</label>
           <input type="checkbox" id="enabled" value="1" v-model="enabled" />
         </div>
       </div>
@@ -186,17 +181,13 @@
     <div class="flex justify-end">
       <button
         type="button"
-        class="text-[#40916C] rounded-lg hover:text-[#2D6A4F] active:text-[#1B4332] px-4 py-1 border border-[#40916C] hover:border-[#2D6A4F] active:border-[#1B4332] mr-2"
+        class="mr-2 btn btn-red-outline"
         @click="clearFrom"
         v-if="addProductModel"
       >
         清除
       </button>
-      <button
-        class="text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] px-8 py-1"
-      >
-        送出
-      </button>
+      <button class="btn">送出</button>
     </div>
   </form>
 </template>

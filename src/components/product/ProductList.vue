@@ -78,7 +78,7 @@
               />
             </th>
             <th class="p-2" @click="sort('is_enabled')">
-              是否啟用
+              是否上架
               <img
                 src="@/assets/long-arrow-alt-down-solid.svg"
                 alt="arrow"
@@ -99,25 +99,31 @@
         <tbody>
           <tr v-for="product in productsData" :key="product[1].id" class="border-b-2">
             <td class="">{{ product[1].title }}</td>
-            <td class="w-[100px] p-1"><img :src="product[1].imageUrl" alt="" /></td>
+            <td class="">
+              <img
+                :src="product[1].imageUrl"
+                :alt="product[1].title"
+                class="h-[60px] w-[80px] p-1 object-cover mx-auto"
+              />
+            </td>
             <td class="">{{ product[1].category }}</td>
             <td class="">{{ product[1].origin_price }}</td>
             <td class="">{{ product[1].price }}</td>
             <td class="" :class="{ 'text-red-500': product[1].is_enabled === 0 }">
-              {{ product[1].is_enabled === 0 ? '未啟用' : '啟用' }}
+              {{ product[1].is_enabled === 0 ? '未上架' : '上架' }}
             </td>
             <td>
               <button
                 type="button"
-                class="p-2 mr-2 border border-[#40916C] text-[#40916C] rounded hover:bg-[#40916C] hover:text-white active:bg-[#1B4332]"
+                class="p-2 mr-2 btn btn-outline"
                 @click="showEditProduct(product[1])"
               >
                 編輯
               </button>
               <button
                 type="button"
-                class="p-2 text-red-400 border border-red-400 rounded active:bg-red-800 hover:bg-red-600 hover:text-white"
-                @click="deleteProduct(product[1])"
+                class="p-2 btn btn-red-outline"
+                @click="tryDeleteProduct(product[1])"
               >
                 刪除
               </button>
@@ -128,6 +134,13 @@
     </section>
     <base-dialog :show="switchEditProduct" @close="closeEditProduct" productModel title="修改商品">
       <product-form @productFromData="editProduct"></product-form>
+    </base-dialog>
+    <base-dialog :show="switchDeleteProduct" title="刪除商品" @close="closeDeleteProduct">
+      <p class="mb-2 text-2xl">確定要刪除商品？</p>
+      <div class="flex justify-between">
+        <button class="px-8 btn" @click="closeDeleteProduct">否</button>
+        <button class="px-8 btn btn-red-outline" @click="deleteProduct">是</button>
+      </div>
     </base-dialog>
   </div>
 </template>
@@ -143,6 +156,8 @@ export default {
       switchEditProduct: false,
       sortType: 'title',
       toSort: false,
+      switchDeleteProduct: false,
+      deleteProductId: null,
     };
   },
   computed: {
@@ -169,9 +184,11 @@ export default {
     closeEditProduct() {
       this.switchEditProduct = false;
     },
-    deleteProduct(product) {
+    tryDeleteProduct(product) {
+      this.switchDeleteProduct = true;
       const { id } = product;
-      this.$emit('productId', id);
+      this.deleteProductId = id;
+      // this.$emit('productId', id);
     },
     editProduct(product) {
       this.switchEditProduct = false;
@@ -180,6 +197,13 @@ export default {
     sort(type) {
       this.toSort = !this.toSort;
       this.sortType = type;
+    },
+    closeDeleteProduct() {
+      this.switchDeleteProduct = false;
+    },
+    deleteProduct() {
+      this.switchDeleteProduct = false;
+      this.$emit('productId', this.deleteProductId);
     },
   },
 };

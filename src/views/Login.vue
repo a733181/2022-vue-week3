@@ -21,11 +21,7 @@
           v-model="password.value"
           @blur="password.isValue = false"
         />
-        <button
-          class="w-full py-4 text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332]"
-        >
-          Log in
-        </button>
+        <button class="w-full py-4 btn">Log in</button>
       </form>
     </section>
   </div>

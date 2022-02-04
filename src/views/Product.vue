@@ -1,20 +1,8 @@
 <template>
   <div class="container mx-auto my-5">
     <section class="w-full mb-6 lg:flex lg:justify-between">
-      <button
-        type="button"
-        @click="logout"
-        class="px-4 py-2 text-red-400 border border-red-400 rounded-lg active:bg-red-800 hover:bg-red-600 hover:text-white"
-      >
-        登出
-      </button>
-      <button
-        type="button"
-        @click="showAddProduct"
-        class="py-2 text-white bg-[#40916C] rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] px-2"
-      >
-        新增商品
-      </button>
+      <button type="button" @click="logout" class="btn btn-red-outline">登出</button>
+      <button type="button" @click="showAddProduct" class="btn">新增商品</button>
     </section>
     <product-list @productId="deleteProduct" @editProductData="editProduct" />
     <base-loading :show="isLoading"></base-loading>

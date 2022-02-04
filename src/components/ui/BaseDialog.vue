@@ -6,12 +6,7 @@
       @click="tryClose"
     ></div>
     <transition name="dialog">
-      <div
-        class="fixed z-20 p-0 overflow-hidden -translate-x-1/2 bg-white rounded-lg shadow-lg left-1/2"
-        open
-        v-if="show"
-        :class="productModel ? ['top-6'] : ['top-1/2']"
-      >
+      <div class="dialog" open v-if="show" :class="productModel ? ['top-6'] : ['top-1/2']">
         <header class="flex justify-between items-center bg-[#40916C] p-3">
           <h2 class="text-2xl text-white">{{ title }}</h2>
           <img
@@ -56,6 +51,10 @@ export default {
 </script>
 
 <style scoped>
+.dialog {
+  @apply fixed z-20 p-0 overflow-hidden -translate-x-1/2 bg-white rounded-lg shadow-lg left-1/2;
+}
+
 .dialog-enter-from,
 .dialog-leave-to {
   opacity: 0;
