@@ -3,18 +3,3 @@
 @tailwind components;
 
 @tailwind utilities;
-
-@layer components {
-  .input {
-    @apply w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md;
-  }
-  .btn {
-    @apply text-white rounded-lg hover:bg-[#2D6A4F] active:bg-[#1B4332] bg-[#40916C] px-3 py-2;
-  }
-  .btn-outline {
-    @apply border border-[#40916C] hover:bg-[#40916C] active:border-[#1B4332] text-[#40916C] bg-white hover:text-white;
-  }
-  .btn-red-outline {
-    @apply text-red-400 bg-white border border-red-400 active:bg-red-800 hover:bg-red-600 hover:text-white;
-  }
-}

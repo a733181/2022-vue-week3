@@ -1,16 +1,16 @@
 <template>
   <div class="container mx-auto my-5">
     <section class="w-full mb-6 lg:flex lg:justify-between">
-      <button type="button" @click="logout" class="btn btn-red-outline">登出</button>
-      <button type="button" @click="showAddProduct" class="btn">新增商品</button>
+      <base-btn red-outline @click="logout">登出</base-btn>
+      <base-btn @click="showAddProduct">新增商品</base-btn>
     </section>
-    <product-list @productId="deleteProduct" @editProductData="editProduct" />
+    <product-list @product-id="deleteProduct" @edit-product-data="editProduct" />
     <base-loading :show="isLoading"></base-loading>
     <base-dialog :show="!!error" title="Error" @close="closeDialog">
       {{ error }}
     </base-dialog>
-    <base-dialog :show="switchAddProduct" @close="closeAddProduct" productModel title="新增商品">
-      <product-form addProductModel @productFromData="addProduct"></product-form>
+    <base-dialog :show="switchAddProduct" @close="closeAddProduct" product-model title="新增商品">
+      <product-form add-product-model @product-from-data="addProduct"></product-form>
     </base-dialog>
   </div>
 </template>

@@ -7,7 +7,10 @@
     ></div>
     <transition name="dialog">
       <div class="dialog" open v-if="show" :class="productModel ? ['top-6'] : ['top-1/2']">
-        <header class="flex justify-between items-center bg-[#40916C] p-3">
+        <header
+          class="flex items-center justify-between p-3"
+          :class="title === '刪除商品' ? 'bg-red-600' : 'bg-[#40916C]'"
+        >
           <h2 class="text-2xl text-white">{{ title }}</h2>
           <img
             src="@/assets/times-solid.svg"

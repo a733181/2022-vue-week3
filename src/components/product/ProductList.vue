@@ -113,33 +113,21 @@
               {{ product[1].is_enabled === 0 ? '未上架' : '上架' }}
             </td>
             <td>
-              <button
-                type="button"
-                class="p-2 mr-2 btn btn-outline"
-                @click="showEditProduct(product[1])"
-              >
-                編輯
-              </button>
-              <button
-                type="button"
-                class="p-2 btn btn-red-outline"
-                @click="tryDeleteProduct(product[1])"
-              >
-                刪除
-              </button>
+              <base-btn outline @click="showEditProduct(product[1])" class="mr-2">編輯</base-btn>
+              <base-btn red-outline @click="tryDeleteProduct(product[1])">刪除</base-btn>
             </td>
           </tr>
         </tbody>
       </table>
     </section>
-    <base-dialog :show="switchEditProduct" @close="closeEditProduct" productModel title="修改商品">
-      <product-form @productFromData="editProduct"></product-form>
+    <base-dialog :show="switchEditProduct" @close="closeEditProduct" product-model title="修改商品">
+      <product-form @product-from-data="editProduct"></product-form>
     </base-dialog>
     <base-dialog :show="switchDeleteProduct" title="刪除商品" @close="closeDeleteProduct">
       <p class="mb-2 text-2xl">確定要刪除商品？</p>
-      <div class="flex justify-between">
-        <button class="px-8 btn" @click="closeDeleteProduct">否</button>
-        <button class="px-8 btn btn-red-outline" @click="deleteProduct">是</button>
+      <div class="flex">
+        <base-btn class="w-full mr-2" outline @click="closeDeleteProduct">否</base-btn>
+        <base-btn class="w-full" red-outline @click="deleteProduct">是</base-btn>
       </div>
     </base-dialog>
   </div>
@@ -149,7 +137,7 @@
 import ProductForm from './ProductForm.vue';
 
 export default {
-  emit: ['productId', 'editProductData'],
+  emit: ['product-id', 'edit-product-data'],
   components: { ProductForm },
   data() {
     return {
@@ -188,11 +176,10 @@ export default {
       this.switchDeleteProduct = true;
       const { id } = product;
       this.deleteProductId = id;
-      // this.$emit('productId', id);
     },
     editProduct(product) {
       this.switchEditProduct = false;
-      this.$emit('editProductData', product);
+      this.$emit('edit-product-data', product);
     },
     sort(type) {
       this.toSort = !this.toSort;
@@ -203,7 +190,7 @@ export default {
     },
     deleteProduct() {
       this.switchDeleteProduct = false;
-      this.$emit('productId', this.deleteProductId);
+      this.$emit('product-id', this.deleteProductId);
     },
   },
 };

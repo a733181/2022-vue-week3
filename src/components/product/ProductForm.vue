@@ -179,15 +179,8 @@
       </div>
     </div>
     <div class="flex justify-end">
-      <button
-        type="button"
-        class="mr-2 btn btn-red-outline"
-        @click="clearFrom"
-        v-if="addProductModel"
-      >
-        清除
-      </button>
-      <button class="btn">送出</button>
+      <base-btn red-outline class="mr-2" @click="clearFrom" v-if="addProductModel">清除</base-btn>
+      <base-btn submit>送出</base-btn>
     </div>
   </form>
 </template>
@@ -201,7 +194,7 @@ export default {
       default: false,
     },
   },
-  emits: ['productFromData', 'showEditProductData'],
+  emits: ['product-from-data'],
   data() {
     return {
       id: '',
@@ -320,7 +313,7 @@ export default {
           id: this.id,
         },
       };
-      this.$emit('productFromData', data);
+      this.$emit('product-from-data', data);
       this.clearFrom();
     },
     clearFrom() {
@@ -369,3 +362,9 @@ export default {
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+.input {
+  @apply w-full px-2 py-1 mt-2 bg-gray-200 border-2 border-gray-400 rounded-md;
+}
+</style>

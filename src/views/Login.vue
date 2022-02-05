@@ -21,7 +21,7 @@
           v-model="password.value"
           @blur="password.isValue = false"
         />
-        <button class="w-full py-4 btn">Log in</button>
+        <base-btn class="w-full h-[55px]" submit>Log in</base-btn>
       </form>
     </section>
   </div>
